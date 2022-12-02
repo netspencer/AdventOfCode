@@ -70,10 +70,16 @@ struct Day2: ParsableCommand {
     func run() throws {
         let input = Input()
         
-        let part1 = input.lines.map(Round.init(partOneInput:)).map(\.score).reduce(0, +)
+        let part1 = input.lines
+            .map(Round.init(partOneInput:))
+            .map(\.score)
+            .sum
         print("part1: \(part1)")
         
-        let part2 = input.lines.map(Round.init(partTwoInput:)).map(\.score).reduce(0, +)
+        let part2 = input.lines
+            .map(Round.init(partTwoInput:))
+            .map(\.score)
+            .sum
         print("part2: \(part2)")
     }
 }

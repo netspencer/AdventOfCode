@@ -14,13 +14,13 @@ struct Day1: ParsableCommand {
                 elf
                     .split(separator: "\n")
                     .compactMap { Int($0) }
-                    .reduce(0, +)
+                    .sum
             }
         
         let maxCalories = calorieCounts.max()!
         print("maxCalories: \(maxCalories)")
 
-        let top3 = calorieCounts.max(count: 3).reduce(0, +)
+        let top3 = calorieCounts.max(count: 3).sum
         print("top3: \(top3)")
     }
 }
