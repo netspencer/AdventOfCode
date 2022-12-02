@@ -28,9 +28,7 @@ func expectExerciseOutput(exercise: Exercise, partOne: String, partTwo: String) 
 }
 
 func input(forDay day: Int) throws -> Input {
-    Input(rawValue: try String(
-        contentsOf: URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-            .appendingPathComponent("Inputs/day\(day).txt"),
-        encoding: .utf8
-    ))
+    let inputDir = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+    let inputFile = inputDir.appendingPathComponent("Inputs/day\(day).txt")
+    return try Input(fromFile: inputFile)
 }

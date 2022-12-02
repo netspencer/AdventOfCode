@@ -15,6 +15,10 @@ public struct Input: RawRepresentable {
         self.init(rawValue: inputString)
     }
     
+    public init(fromFile file: URL) throws {
+        self.init(rawValue: try String(contentsOf: file, encoding: .utf8))
+    }
+    
     public var lines: [String] {
         rawValue.components(separatedBy: .newlines).dropLast()
     }
