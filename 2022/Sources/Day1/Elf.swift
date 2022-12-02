@@ -1,0 +1,25 @@
+struct Elf: Comparable, CustomStringConvertible {
+    let itemCalories: [Int]
+    
+    var totalCalories: Int {
+        itemCalories.sum
+    }
+    
+    var description: String {
+        "Carrying \(totalCalories.description) calories"
+    }
+    
+    static func < (lhs: Elf, rhs: Elf) -> Bool {
+        lhs.totalCalories < rhs.totalCalories
+    }
+}
+
+// - MARK: Parse
+
+extension Elf {
+    init(_ input: String) {
+        self.itemCalories = input
+            .split(separator: "\n")
+            .compactMap { Int($0) }
+    }
+}

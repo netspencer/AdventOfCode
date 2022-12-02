@@ -3,24 +3,19 @@ import Utils
 
 @main
 struct Day1: Exercise {
-    let calorieCounts: [Int]
+    let elves: [Elf]
     
     init(input: Input) {
-        self.calorieCounts = input.rawValue
+        self.elves = input.rawValue
             .components(separatedBy: "\n\n")
-            .map { elf in
-                elf
-                    .split(separator: "\n")
-                    .compactMap { Int($0) }
-                    .sum
-            }
+            .map(Elf.init)
     }
     
     var partOne: String {
-        calorieCounts.max()!.description
+        elves.max()!.description
     }
     
     var partTwo: String {
-        calorieCounts.max(count: 3).sum.description
+        elves.max(count: 3).sum.description
     }
 }
