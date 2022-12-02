@@ -1,4 +1,3 @@
-import Algorithms
 import ArgumentParser
 import Utils
 import Foundation
@@ -103,14 +102,10 @@ extension Round {
 extension Move {
     init(_ inputChar: Character) {
         switch inputChar {
-        case "A", "X":
-            self = .rock
-        case "B", "Y":
-            self = .paper
-        case "C", "Z":
-            self = .scissors
-        default:
-            fatalError()
+        case "A", "X": self = .rock
+        case "B", "Y": self = .paper
+        case "C", "Z": self = .scissors
+        default: fatalError()
         }
     }
 }
