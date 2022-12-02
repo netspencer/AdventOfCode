@@ -15,7 +15,6 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/apple/swift-algorithms", from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-collections", from: "1.0.3"),
-        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.0"),
         .package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.7.0"),
     ],
     targets: [
@@ -44,7 +43,6 @@ func dayTargets(days: ClosedRange<Int>) -> [PackageDescription.Target] {
             dependencies: [
                 "Utils",
                 .product(name: "Algorithms", package: "swift-algorithms"),
-                .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "Collections", package: "swift-collections"),
                 .product(name: "Parsing", package: "swift-parsing"),
             ]
