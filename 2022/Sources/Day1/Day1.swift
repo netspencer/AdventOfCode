@@ -1,14 +1,12 @@
 import Algorithms
-import ArgumentParser
 import Utils
-import Foundation
 
 @main
-struct Day1: ParsableCommand {
-    func run() throws {
-        let input = Input()
-        
-        let calorieCounts = input.rawValue
+struct Day1: Exercise {
+    let calorieCounts: [Int]
+    
+    init(input: Input) {
+        self.calorieCounts = input.rawValue
             .components(separatedBy: "\n\n")
             .map { elf in
                 elf
@@ -16,11 +14,13 @@ struct Day1: ParsableCommand {
                     .compactMap { Int($0) }
                     .sum
             }
-        
-        let maxCalories = calorieCounts.max()!
-        print("maxCalories: \(maxCalories)")
-
-        let top3 = calorieCounts.max(count: 3).sum
-        print("top3: \(top3)")
+    }
+    
+    var partOne: String {
+        calorieCounts.max()!.description
+    }
+    
+    var partTwo: String {
+        calorieCounts.max(count: 3).sum.description
     }
 }
