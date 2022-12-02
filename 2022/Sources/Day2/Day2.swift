@@ -31,9 +31,18 @@ enum Move: Int {
 struct Round {
     let opponentMove: Move
     let playerMove: Move
+    let outcome: Outcome
     
-    var outcome: Outcome {
-        opponentMove.outcome(forMove: playerMove)
+    init(opponentMove: Move, playerMove: Move) {
+        self.opponentMove = opponentMove
+        self.playerMove = playerMove
+        self.outcome = opponentMove.outcome(forMove: playerMove)
+    }
+    
+    init(opponentMove: Move, outcome: Outcome) {
+        self.opponentMove = opponentMove
+        self.playerMove = opponentMove.move(forOutcome: outcome)
+        self.outcome = outcome
     }
     
     var score: Int {
@@ -73,14 +82,18 @@ struct Day2: ParsableCommand {
 extension Round {
     init(partOneInput inputLine: String) {
         let characters = Array(inputLine)
-        self.opponentMove = Move(characters[0])
-        self.playerMove = Move(characters[2])
+        self.init(
+            opponentMove: Move(characters[0]),
+            playerMove: Move(characters[2])
+        )
     }
     
     init(partTwoInput inputLine: String) {
         let characters = Array(inputLine)
-        self.opponentMove = Move(characters[0])
-        self.playerMove = self.opponentMove.move(forOutcome: Outcome(characters[2]))
+        self.init(
+            opponentMove: Move(characters[0]),
+            outcome: Outcome(characters[2])
+        )
     }
 }
 
