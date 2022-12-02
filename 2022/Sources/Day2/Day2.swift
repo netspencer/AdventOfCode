@@ -1,4 +1,3 @@
-import ArgumentParser
 import Utils
 import Foundation
 
@@ -59,21 +58,27 @@ enum Outcome: Int {
 }
 
 @main
-struct Day2: ParsableCommand {
-    func run() throws {
-        let input = Input()
-        
-        let part1 = input.lines
+struct Day2: Exercise {
+    let input: Input
+    
+    init(input: Input) {
+        self.input = input
+    }
+    
+    var partOne: String {
+        input.lines
             .map(Round.init(partOneInput:))
             .map(\.score)
             .sum
-        print("part1: \(part1)")
-        
-        let part2 = input.lines
+            .description
+    }
+    
+    var partTwo: String {
+        input.lines
             .map(Round.init(partTwoInput:))
             .map(\.score)
             .sum
-        print("part2: \(part2)")
+            .description
     }
 }
 
