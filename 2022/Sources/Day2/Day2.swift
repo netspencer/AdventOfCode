@@ -1,54 +1,6 @@
 import Utils
 import Foundation
 
-enum Move: Int {
-    case rock, paper, scissors
-
-    var score: Int {
-        rawValue + 1
-    }
-    
-    var winningMove: Move {
-        Move(rawValue: (rawValue + 1) % 3)!
-    }
-    
-    func move(forOutcome outcome: Outcome) -> Move {
-        switch outcome {
-        case .lose: return winningMove.winningMove
-        case .draw: return self
-        case .win: return winningMove
-        }
-    }
-    
-    func outcome(forMove move: Move) -> Outcome {
-        guard self != move else { return .draw }
-        guard move == winningMove else { return .lose }
-        return .win
-    }
-}
-
-struct Round {
-    let opponentMove: Move
-    let playerMove: Move
-    let outcome: Outcome
-    
-    init(opponentMove: Move, playerMove: Move) {
-        self.opponentMove = opponentMove
-        self.playerMove = playerMove
-        self.outcome = opponentMove.outcome(forMove: playerMove)
-    }
-    
-    init(opponentMove: Move, outcome: Outcome) {
-        self.opponentMove = opponentMove
-        self.playerMove = opponentMove.move(forOutcome: outcome)
-        self.outcome = outcome
-    }
-    
-    var score: Int {
-        playerMove.score + outcome.score
-    }
-}
-
 enum Outcome: Int {
     case lose, draw, win
     
