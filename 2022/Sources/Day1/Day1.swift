@@ -11,11 +11,15 @@ struct Day1: Exercise {
             .map(Elf.init)
     }
     
+    /// the totalCalories held by the elf with the most totalCalories
     var partOne: String {
-        elves.max()!.description
+        let topElf = elves.max()!
+        return topElf.totalCalories.description
     }
     
+    /// the combined number of calories held by the elves with the top three most totalCalories
     var partTwo: String {
-        elves.max(count: 3).sum.description
+        let topThreeElves = elves.max(count: 3)
+        return topThreeElves.map(\.totalCalories).sum.description
     }
 }

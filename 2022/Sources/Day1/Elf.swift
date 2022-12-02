@@ -1,12 +1,8 @@
-struct Elf: Comparable, CustomStringConvertible {
+struct Elf: Comparable {
     let itemCalories: [Int]
     
     var totalCalories: Int {
         itemCalories.sum
-    }
-    
-    var description: String {
-        "Carrying \(totalCalories.description) calories"
     }
     
     static func < (lhs: Elf, rhs: Elf) -> Bool {
