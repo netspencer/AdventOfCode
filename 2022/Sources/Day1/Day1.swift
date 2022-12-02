@@ -6,9 +6,9 @@ import Foundation
 @main
 struct Day1: ParsableCommand {
     func run() throws {
-        let input = readInput()
+        let input = Input()
         
-        let calorieCounts = input
+        let calorieCounts = input.rawValue
             .components(separatedBy: "\n\n")
             .map { elf in
                 elf
