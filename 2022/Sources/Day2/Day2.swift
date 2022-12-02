@@ -2,43 +2,29 @@ import ArgumentParser
 import Utils
 import Foundation
 
-enum Move {
+enum Move: Int {
     case rock, paper, scissors
-        
+
     var score: Int {
-        switch self {
-        case .rock: return 1
-        case .paper: return 2
-        case .scissors: return 3
-        }
+        rawValue + 1
+    }
+    
+    var winningMove: Move {
+        Move(rawValue: (rawValue + 1) % 3)!
     }
     
     func move(forOutcome outcome: Outcome) -> Move {
-        switch (self, outcome) {
-        case (.rock, .lose): return .scissors
-        case (.rock, .draw): return .rock
-        case (.rock, .win): return .paper
-        case (.paper, .lose): return .rock
-        case (.paper, .draw): return .paper
-        case (.paper, .win): return .scissors
-        case (.scissors, .lose): return .paper
-        case (.scissors, .draw): return .scissors
-        case (.scissors, .win): return .rock
+        switch outcome {
+        case .lose: return winningMove.winningMove
+        case .draw: return self
+        case .win: return winningMove
         }
     }
     
     func outcome(forMove move: Move) -> Outcome {
-        switch (self, move) {
-        case (.rock, .rock): return .draw
-        case (.rock, .paper): return .win
-        case (.rock, .scissors): return .lose
-        case (.paper, .rock): return .lose
-        case (.paper, .paper): return .draw
-        case (.paper, .scissors): return .win
-        case (.scissors, .rock): return .win
-        case (.scissors, .paper): return .lose
-        case (.scissors, .scissors): return .draw
-        }
+        guard self != move else { return .draw }
+        guard move == winningMove else { return .lose }
+        return .win
     }
 }
 
@@ -55,15 +41,11 @@ struct Round {
     }
 }
 
-enum Outcome {
+enum Outcome: Int {
     case lose, draw, win
     
     var score: Int {
-        switch self {
-        case .lose: return 0
-        case .draw: return 3
-        case .win: return 6
-        }
+        rawValue * 3
     }
 }
 
