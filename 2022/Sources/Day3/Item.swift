@@ -9,7 +9,7 @@ struct Item: RawRepresentable, Hashable {
 }
 
 extension Set where Element == Item {
-    init(fromInput input: Substring) {
+    init(fromInput input: some StringProtocol) {
         self.init(input.map(Item.init(rawValue:)))
     }
 }

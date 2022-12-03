@@ -2,29 +2,21 @@ struct Rucksack {
     let firstCompartment: Set<Item>
     let secondCompartment: Set<Item>
     
-    var combinedCompartmentContents: Set<Item> {
+    var allItems: Set<Item> {
         firstCompartment.union(secondCompartment)
     }
     
-    var commonOccuringItem: Item {
+    var redundantItem: Item {
         firstCompartment.intersection(secondCompartment).first!
-    }
-    
-    var priority: Int {
-        commonOccuringItem.priority
     }
 }
 
 extension Collection where Element == Rucksack {
     var badge: Item {
         reduce(
-            Set(first!.combinedCompartmentContents),
-            { $0.intersection($1.combinedCompartmentContents) }
+            Set(first!.allItems),
+            { $0.intersection($1.allItems) }
         ).first!
-    }
-    
-    var priority: Int {
-        badge.priority
     }
 }
 

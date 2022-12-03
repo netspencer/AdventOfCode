@@ -12,6 +12,7 @@ struct Day3: Exercise {
     
     var partOne: String {
         rucksacks
+            .map(\.redundantItem)
             .map(\.priority)
             .sum
             .description
@@ -20,6 +21,7 @@ struct Day3: Exercise {
     var partTwo: String {
         rucksacks
             .chunks(ofCount: 3)
+            .map(\.badge)
             .map(\.priority)
             .sum
             .description
