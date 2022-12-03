@@ -10,7 +10,7 @@ struct Day2: Exercise {
     
     var partOne: String {
         input.lines
-            .map(Round.init(partOneInput:))
+            .map(Round.parse(partOne:))
             .map(\.score)
             .sum
             .description
@@ -18,7 +18,7 @@ struct Day2: Exercise {
     
     var partTwo: String {
         input.lines
-            .map(Round.init(partTwoInput:))
+            .map(Round.parse(partTwo:))
             .map(\.score)
             .sum
             .description

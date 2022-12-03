@@ -7,9 +7,3 @@ struct Item: RawRepresentable, Hashable {
         return Int(rawValue.asciiValue!) - (rawValue.isUppercase ? 38 : 96)
     }
 }
-
-extension Set where Element == Item {
-    init(fromInput input: some StringProtocol) {
-        self.init(input.map(Item.init(rawValue:)))
-    }
-}

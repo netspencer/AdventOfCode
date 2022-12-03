@@ -19,12 +19,3 @@ extension Collection where Element == Rucksack {
         ).first!
     }
 }
-
-// - MARK: Parse
-
-extension Rucksack {
-    init(_ input: String) {
-        self.firstCompartment = Set(fromInput: input.prefix(input.count / 2))
-        self.secondCompartment = Set(fromInput: input.suffix(input.count / 2))
-    }
-}

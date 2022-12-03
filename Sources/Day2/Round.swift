@@ -20,22 +20,3 @@ struct Round {
     }
 }
 
-// - MARK: Parse
-
-extension Round {
-    init(partOneInput inputLine: String) {
-        let characters = Array(inputLine)
-        self.init(
-            opponentMove: Move(characters[0]),
-            playerMove: Move(characters[2])
-        )
-    }
-    
-    init(partTwoInput inputLine: String) {
-        let characters = Array(inputLine)
-        self.init(
-            opponentMove: Move(characters[0]),
-            outcome: Outcome(characters[2])
-        )
-    }
-}

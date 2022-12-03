@@ -9,13 +9,3 @@ struct Elf: Comparable {
         lhs.totalCalories < rhs.totalCalories
     }
 }
-
-// - MARK: Parse
-
-extension Elf {
-    init(_ input: String) {
-        self.itemCalories = input
-            .split(separator: "\n")
-            .compactMap { Int($0) }
-    }
-}

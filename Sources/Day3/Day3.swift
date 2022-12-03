@@ -7,7 +7,7 @@ struct Day3: Exercise {
     let rucksacks: [Rucksack]
     
     init(input: Input) {
-        self.rucksacks = input.lines.map(Rucksack.init)
+        self.rucksacks = input.lines.map(Rucksack.parse)
     }
     
     var partOne: String {

@@ -23,16 +23,3 @@ enum Move: Int {
         return .win
     }
 }
-
-// - MARK: Parse
-
-extension Move {
-    init(_ inputChar: Character) {
-        switch inputChar {
-        case "A", "X": self = .rock
-        case "B", "Y": self = .paper
-        case "C", "Z": self = .scissors
-        default: fatalError()
-        }
-    }
-}

@@ -8,7 +8,7 @@ struct Day1: Exercise {
     init(input: Input) {
         self.elves = input.rawValue
             .components(separatedBy: "\n\n")
-            .map(Elf.init)
+            .map(Elf.parse)
     }
     
     /// the totalCalories held by the elf with the most totalCalories
