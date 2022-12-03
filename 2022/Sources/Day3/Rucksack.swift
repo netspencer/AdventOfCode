@@ -15,6 +15,19 @@ struct Rucksack {
     }
 }
 
+extension Collection where Element == Rucksack {
+    var badge: Item {
+        reduce(
+            Set(first!.combinedCompartmentContents),
+            { $0.intersection($1.combinedCompartmentContents) }
+        ).first!
+    }
+    
+    var priority: Int {
+        badge.priority
+    }
+}
+
 // - MARK: Parse
 
 extension Rucksack {

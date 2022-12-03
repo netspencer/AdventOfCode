@@ -4,24 +4,22 @@ import Utils
 
 @main
 struct Day3: Exercise {
-    let input: Input
+    let rucksacks: [Rucksack]
     
     init(input: Input) {
-        self.input = input
+        self.rucksacks = input.lines.map(Rucksack.init)
     }
     
     var partOne: String {
-        input.lines
-            .map(Rucksack.init)
+        rucksacks
             .map(\.priority)
             .sum
             .description
     }
     
     var partTwo: String {
-        input.lines
+        rucksacks
             .chunks(ofCount: 3)
-            .map { Group(rucksacks: $0.map(Rucksack.init)) }
             .map(\.priority)
             .sum
             .description
