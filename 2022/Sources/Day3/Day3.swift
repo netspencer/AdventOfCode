@@ -21,8 +21,7 @@ struct Day3: Exercise {
     var partTwo: String {
         input.lines
             .chunks(ofCount: 3)
-            .map { $0.map(Rucksack.init) }
-            .map(ElfGroup.init(rucksacks:))
+            .map { Group(rucksacks: $0.map(Rucksack.init)) }
             .map(\.priority)
             .sum
             .description

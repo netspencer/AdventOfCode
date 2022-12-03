@@ -1,12 +1,12 @@
 struct Rucksack {
-    let firstCompartment: Set<Character>
-    let secondCompartment: Set<Character>
+    let firstCompartment: Set<Item>
+    let secondCompartment: Set<Item>
     
-    var combinedCompartmentContents: Set<Character> {
+    var combinedCompartmentContents: Set<Item> {
         firstCompartment.union(secondCompartment)
     }
     
-    var commonOccuringItem: Character {
+    var commonOccuringItem: Item {
         firstCompartment.intersection(secondCompartment).first!
     }
     
@@ -18,10 +18,8 @@ struct Rucksack {
 // - MARK: Parse
 
 extension Rucksack {
-    init(_ inputLine: String) {
-        let middleIndex = inputLine.index(inputLine.startIndex, offsetBy: inputLine.count / 2)
-        self.firstCompartment = Set(inputLine[inputLine.startIndex..<middleIndex])
-        self.secondCompartment = Set(inputLine[middleIndex...])
+    init(_ input: String) {
+        self.firstCompartment = Set(fromInput: input.prefix(input.count / 2))
+        self.secondCompartment = Set(fromInput: input.suffix(input.count / 2))
     }
 }
-

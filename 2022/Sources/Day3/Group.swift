@@ -1,7 +1,7 @@
-struct ElfGroup {
+struct Group {
     let rucksacks: [Rucksack]
-    
-    var badge: Character {
+        
+    var badge: Item {
         rucksacks
             .map(\.combinedCompartmentContents)
             .reduce(rucksacks.first!.combinedCompartmentContents) { partialResult, next in
