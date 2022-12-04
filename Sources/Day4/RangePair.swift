@@ -2,12 +2,17 @@ struct RangePair {
     let firstElf: ClosedRange<Int>
     let secondElf: ClosedRange<Int>
     
-    var oneFullyContainsOther: Bool {
-        firstElf.clamped(to: secondElf) == firstElf
-            || secondElf.clamped(to: firstElf) == secondElf
+    var isContained: Bool {
+        firstElf.contains(secondElf) || secondElf.contains(firstElf)
     }
     
-    var oneOverlapsOther: Bool {
-        firstElf.overlaps(secondElf) || secondElf.overlaps(firstElf)
+    var isOverlapping: Bool {
+        firstElf.overlaps(secondElf)
+    }
+}
+
+extension ClosedRange {
+    func contains(_ other: ClosedRange) -> Bool {
+        other.clamped(to: self) == other
     }
 }
