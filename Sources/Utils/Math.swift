@@ -5,3 +5,9 @@ extension Array where Element == Int {
         reduce(0, +)
     }
 }
+
+extension Bool {
+    public var intValue: Int {
+        self ? 1 : 0
+    }
+}
