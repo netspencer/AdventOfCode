@@ -13,15 +13,15 @@ struct Day4: Exercise {
     
     var partOne: String {
         pairs
-            .map(\.isContained.intValue)
-            .sum
+            .filter(\.isContained)
+            .count
             .description
     }
     
     var partTwo: String {
         pairs
-            .map(\.isOverlapping.intValue)
-            .sum
+            .filter(\.isOverlapping)
+            .count
             .description
     }
 }
