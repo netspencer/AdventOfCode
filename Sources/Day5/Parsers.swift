@@ -6,25 +6,15 @@ extension CargoShip {
     static func parse(_ input: String) -> Self {
         self.init(
             cargo: input.components(separatedBy: .newlines).dropLast()
-                .map {
-                    $0.chunks(ofCount: 4)
-                        .compactMap {
-                            $0.filter { $0.isLetter || $0.isWhitespace }.first
-                        }
-                }
                 .reversed()
-                .enumerated()
-                .reduce(into: [[]]) { partialResult, next in
-                    if next.offset == 0 {
-                        partialResult = next.element.map { char in
-                            [char]
+                .reduce(into: [[Character]]()) { stacks, line in
+                    for (i, c) in line.enumerated() {
+                        guard c.isLetter else { continue }
+                        let stackNumber = i / 4
+                        if !stacks.indices.contains(stackNumber) {
+                            stacks.insert([], at: stackNumber)
                         }
-                    } else {
-                        next.element.enumerated().forEach { item in
-                            if item.element.isLetter {
-                                partialResult[item.offset].append(item.element)
-                            }
-                        }
+                        stacks[stackNumber].append(c)
                     }
                 }
         )

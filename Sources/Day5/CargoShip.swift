@@ -10,9 +10,11 @@ struct CargoShip {
         let liftedContents = source.suffix(instruction.quantity)
         
         if isReversed {
-            cargo[instruction.destinationStack - 1].append(contentsOf: liftedContents.reversed())
+            cargo[instruction.destinationStack - 1]
+                .append(contentsOf: liftedContents.reversed())
         } else {
-            cargo[instruction.destinationStack - 1].append(contentsOf: liftedContents)
+            cargo[instruction.destinationStack - 1]
+                .append(contentsOf: liftedContents)
         }
 
         cargo[instruction.sourceStack - 1].removeLast(instruction.quantity)
