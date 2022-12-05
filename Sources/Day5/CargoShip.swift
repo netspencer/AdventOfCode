@@ -6,17 +6,17 @@ struct CargoShip {
     }
     
     mutating func execute(_ instruction: Instruction, isReversed: Bool) {
-        let source = cargo[instruction.sourceStack - 1]
-        let liftedContents = source.suffix(instruction.quantity)
+        let source = cargo[instruction.from - 1]
+        let liftedContents = source.suffix(instruction.count)
         
         if isReversed {
-            cargo[instruction.destinationStack - 1]
+            cargo[instruction.to - 1]
                 .append(contentsOf: liftedContents.reversed())
         } else {
-            cargo[instruction.destinationStack - 1]
+            cargo[instruction.to - 1]
                 .append(contentsOf: liftedContents)
         }
 
-        cargo[instruction.sourceStack - 1].removeLast(instruction.quantity)
+        cargo[instruction.from - 1].removeLast(instruction.count)
     }
 }

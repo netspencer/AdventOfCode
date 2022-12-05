@@ -1,5 +1,5 @@
 struct Instruction {
-    let quantity: Int
-    let sourceStack: Int
-    let destinationStack: Int
+    let count: Int
+    let from: Int
+    let to: Int
 }

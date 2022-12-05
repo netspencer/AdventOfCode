@@ -23,14 +23,14 @@ extension CargoShip {
 
 extension Instruction {
     static func parse(_ input: Substring) -> Self {
-        let (quantity, sourceStack, destinationStack) = input.split(separator: " ")
+        let (count, from, to) = input.split(separator: " ")
             .filter { $0.allSatisfy(\.isNumber) }
             .compactMap { Int($0) }
             .splat()
         return self.init(
-            quantity: quantity,
-            sourceStack: sourceStack,
-            destinationStack: destinationStack
+            count: count,
+            from: from,
+            to: to
         )
     }
 }
