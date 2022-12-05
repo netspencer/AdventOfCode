@@ -35,16 +35,16 @@ final class AdventOfCodeTests: XCTestCase {
     func testDay4() throws {
         expectExerciseOutput(
             exercise: Day4(input: try input(forDay: 4)),
-            partOne: "7917",
-            partTwo: "2585"
+            partOne: "456",
+            partTwo: "808"
         )
     }
 
     func testDay5() throws {
         expectExerciseOutput(
             exercise: Day5(input: try input(forDay: 5)),
-            partOne: "7917",
-            partTwo: "2585"
+            partOne: "TGWSMRBPN",
+            partTwo: "TZLTLWRNF"
         )
     }
 }
