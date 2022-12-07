@@ -3,7 +3,7 @@ import Foundation
 
 extension FileSystem {
     static func parse(_ input: Input) -> FileSystem {
-        let root = FileNode(.directory(name: "/"))
+        let root: FileNode = .directory(name: "/")
         var pwd: FileNode? = root
         
         for line in input.lines {
@@ -13,7 +13,7 @@ extension FileSystem {
                 switch components[2] {
                 case "/": pwd = root
                 case "..": pwd = pwd?.parent
-                default: pwd = pwd?.childDirectory(name: components[2])
+                default: pwd = pwd?.child(name: components[2])
                 }
                 
             case ("$", "ls"):
@@ -30,12 +30,11 @@ extension FileSystem {
 
 extension FileNode {
     static func parse(_ input: [String]) -> FileNode {
-        precondition(input.count == 2)
-        if input[0] == "dir" {
-            return FileNode(.directory(name: String(input[1])))
-        } else {
-            return FileNode(.file(size: Int(input[0])!, name: String(input[1])))
+        let (size, name) = input.splat()
+        guard size != "dir" else {
+            return .directory(name: name)
         }
+        return .file(size: Int(size)!, name: name)
     }
 }
 

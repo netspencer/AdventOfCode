@@ -1,16 +1,25 @@
 class FileNode {
-    enum Value {
+    private enum Value {
         case directory(name: String)
         case file(size: Int, name: String)
     }
     
-    var value: Value
+    private var value: Value
+    
     var children: [FileNode]
     weak var parent: FileNode?
     
-    init(_ value: Value) {
+    private init(_ value: Value) {
         self.value = value
         self.children = []
+    }
+    
+    static func directory(name: String) -> FileNode {
+        return FileNode(.directory(name: name))
+    }
+    
+    static func file(size: Int, name: String) -> FileNode {
+        return FileNode(.file(size: size, name: name))
     }
     
     func add(child: FileNode) {
@@ -18,23 +27,19 @@ class FileNode {
         children.append(child)
     }
 
-    func childDirectory(name: String) -> FileNode? {
-        children.first { $0.directoryName == name }
+    func child(name: String) -> FileNode? {
+        children.first { $0.name == name }
     }
     
-    var directoryName: String? {
+    var name: String? {
         switch value {
         case let .directory(name: name):
             return name
-        default:
-            return nil
+        case let .file(_, name: name):
+            return name
         }
     }
-    
-    var isDirectory: Bool {
-        directoryName != nil
-    }
-    
+        
     var size: Int {
         switch value {
         case let .file(size, _):
@@ -44,7 +49,14 @@ class FileNode {
         }
     }
     
-    var sizes: [Int] {
-        [size] + children.filter(\.isDirectory).flatMap(\.sizes)
+    var isDirectory: Bool {
+        switch value {
+        case .directory: return true
+        default: return false
+        }
+    }
+    
+    var directorySizes: [Int] {
+        (isDirectory ? [size] : []) + children.flatMap(\.directorySizes)
     }
 }

@@ -4,28 +4,24 @@ class FileSystem {
     init(root: FileNode) {
         self.root = root
     }
-    
-    var size: Int {
-        root.size
-    }
-    
-    var sizes: [Int] {
-        root.sizes
+        
+    var directorySizes: [Int] {
+        root.directorySizes
     }
     
     var hardDriveSize: Int {
         70_000_000
     }
     
-    var requiredFreeSpace: Int {
+    var requiredFreeSize: Int {
         30_000_000
     }
     
     var maxAllowedSize: Int {
-        hardDriveSize - requiredFreeSpace
+        hardDriveSize - requiredFreeSize
     }
     
     var overflowSize: Int {
-        size - maxAllowedSize
+        root.size - maxAllowedSize
     }
 }

@@ -12,7 +12,7 @@ struct Day7: Exercise {
     
     var partOne: String {
         fileSystem
-            .sizes
+            .directorySizes
             .filter { $0 <= 100_000 }
             .sum
             .description
@@ -20,7 +20,7 @@ struct Day7: Exercise {
     
     var partTwo: String {
         fileSystem
-            .sizes
+            .directorySizes
             .filter { $0 >= fileSystem.overflowSize }
             .min()!
             .description
