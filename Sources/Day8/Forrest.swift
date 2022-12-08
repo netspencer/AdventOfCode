@@ -1,5 +1,6 @@
 import Foundation
 
+/// Forrest is a grid of tree heights
 struct Forrest {
     typealias Height = Int
     typealias Coordinate = (row: Int, column: Int)
