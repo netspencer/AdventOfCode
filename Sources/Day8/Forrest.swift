@@ -59,10 +59,10 @@ struct Forrest {
 extension Forrest {
     func isVisible(at coordinate: Coordinate) -> Bool {
         Direction.allCases.contains { direction in
-            guard let minAdjacentValue = adjacentValues(coordinate, direction: direction).max() else {
+            guard let tallestAdjacentTree = adjacentValues(coordinate, direction: direction).max() else {
                 return true
             }
-            return self[coordinate] > minAdjacentValue
+            return self[coordinate] > tallestAdjacentTree
         }
     }
     
