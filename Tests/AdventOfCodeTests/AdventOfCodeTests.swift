@@ -11,68 +11,84 @@ import Utils
 @testable import Day8
 
 final class AdventOfCodeTests: XCTestCase {
-    func testDay1() throws {
-        expectExerciseOutput(
-            exercise: Day1(input: try input(forDay: 1)),
-            partOne: "67450",
-            partTwo: "199357"
-        )
+    func testDay1() {
+        measure {
+            expectExerciseOutput(
+                exercise: Day1(input: input(forDay: 1)),
+                partOne: "67450",
+                partTwo: "199357"
+            )
+        }
     }
     
-    func testDay2() throws {
-        expectExerciseOutput(
-            exercise: Day2(input: try input(forDay: 2)),
-            partOne: "11449",
-            partTwo: "13187"
-        )
+    func testDay2() {
+        measure {
+            expectExerciseOutput(
+                exercise: Day2(input: input(forDay: 2)),
+                partOne: "11449",
+                partTwo: "13187"
+            )
+        }
     }
     
-    func testDay3() throws {
-        expectExerciseOutput(
-            exercise: Day3(input: try input(forDay: 3)),
-            partOne: "7917",
-            partTwo: "2585"
-        )
+    func testDay3() {
+        measure {
+            expectExerciseOutput(
+                exercise: Day3(input: input(forDay: 3)),
+                partOne: "7917",
+                partTwo: "2585"
+            )
+        }
     }
     
-    func testDay4() throws {
-        expectExerciseOutput(
-            exercise: Day4(input: try input(forDay: 4)),
-            partOne: "456",
-            partTwo: "808"
-        )
+    func testDay4() {
+        measure {
+            expectExerciseOutput(
+                exercise: Day4(input: input(forDay: 4)),
+                partOne: "456",
+                partTwo: "808"
+            )
+        }
     }
 
-    func testDay5() throws {
-        expectExerciseOutput(
-            exercise: Day5(input: try input(forDay: 5)),
-            partOne: "TGWSMRBPN",
-            partTwo: "TZLTLWRNF"
-        )
+    func testDay5() {
+        measure {
+            expectExerciseOutput(
+                exercise: Day5(input: input(forDay: 5)),
+                partOne: "TGWSMRBPN",
+                partTwo: "TZLTLWRNF"
+            )
+        }
     }
     
-    func testDay6() throws {
-        expectExerciseOutput(
-            exercise: Day6(input: try input(forDay: 6)),
-            partOne: "1100",
-            partTwo: "2421"
-        )
+    func testDay6() {
+        measure {
+            expectExerciseOutput(
+                exercise: Day6(input: input(forDay: 6)),
+                partOne: "1100",
+                partTwo: "2421"
+            )
+        }
     }
     
-    func testDay7() throws {
-        expectExerciseOutput(
-            exercise: Day7(input: try input(forDay: 7)),
-            partOne: "1232307",
-            partTwo: "7268994"
-        )
+    func testDay7() {
+        measure {
+            expectExerciseOutput(
+                exercise: Day7(input: input(forDay: 7)),
+                partOne: "1232307",
+                partTwo: "7268994"
+            )
+        }
     }
 
-    func testDay8() throws {
-        expectExerciseOutput(
-            exercise: Day8(input: try input(forDay: 8)),
-            partOne: "1805",
-            partTwo: "444528"
-        )
+    func testDay8() {
+        measure {
+            expectExerciseOutput(
+                exercise: Day8(input: input(forDay: 8)),
+                partOne: "1805",
+                partTwo: "444528"
+            )
+        }
     }
 }
 
@@ -81,8 +97,8 @@ func expectExerciseOutput(exercise: Exercise, partOne: String, partTwo: String) 
     XCTAssertEqual(exercise.partTwo, partTwo)
 }
 
-func input(forDay day: Int) throws -> Input {
+func input(forDay day: Int) -> Input {
     let inputDir = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
     let inputFile = inputDir.appendingPathComponent("Inputs/day\(day).txt")
-    return try Input(fromFile: inputFile)
+    return try! Input(fromFile: inputFile)
 }

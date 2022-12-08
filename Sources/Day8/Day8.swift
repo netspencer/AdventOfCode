@@ -13,6 +13,7 @@ struct Day8: Exercise {
     var partOne: String {
         forrest
             .coordinates
+            .lazy
             .filter { forrest.isVisible(at: $0) }
             .count
             .description
@@ -21,6 +22,7 @@ struct Day8: Exercise {
     var partTwo: String {
         forrest
             .coordinates
+            .lazy
             .map { forrest.scenicScore(for: $0) }
             .max()!
             .description
