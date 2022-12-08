@@ -3,25 +3,25 @@ import Foundation
 import Utils
 
 @main
-struct Day7: Exercise {
-    let grid: Grid<Int>
+struct Day8: Exercise {
+    let forrest: Forrest
     
     init(input: Input) {
-        self.grid = .parse(input)
+        self.forrest = .parse(input)
     }
     
     var partOne: String {
-        grid
+        forrest
             .coordinates
-            .filter { grid.isGreaterThanAdjacentValues($0) }
+            .filter { forrest.isVisible(at: $0) }
             .count
             .description
     }
     
     var partTwo: String {
-        grid
+        forrest
             .coordinates
-            .map { grid.smallerAdjacentValuesProduct($0) }
+            .map { forrest.scenicScore(for: $0) }
             .max()!
             .description
     }

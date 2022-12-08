@@ -8,6 +8,7 @@ import Utils
 @testable import Day5
 @testable import Day6
 @testable import Day7
+@testable import Day8
 
 final class AdventOfCodeTests: XCTestCase {
     func testDay1() throws {
@@ -66,6 +67,13 @@ final class AdventOfCodeTests: XCTestCase {
         )
     }
 
+    func testDay8() throws {
+        expectExerciseOutput(
+            exercise: Day8(input: try input(forDay: 8)),
+            partOne: "1805",
+            partTwo: "444528"
+        )
+    }
 }
 
 func expectExerciseOutput(exercise: Exercise, partOne: String, partTwo: String) {
