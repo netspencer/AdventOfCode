@@ -51,29 +51,32 @@ struct Forrest {
         }
     }
     
-    func adjacentValues(_ coordinate: Coordinate, direction: Direction) -> [Height] {
+    func adjacentTrees(_ coordinate: Coordinate, direction: Direction) -> [Height] {
         adjacentCoordinates(coordinate, direction: direction).map { self[$0] }
     }
 }
 
 extension Forrest {
+    /// isVisible is true when there is a direction in which all the adjacent trees are shorter
     func isVisible(at coordinate: Coordinate) -> Bool {
         Direction.allCases.contains { direction in
-            guard let tallestAdjacentTree = adjacentValues(coordinate, direction: direction).max() else {
-                return true
+            adjacentTrees(coordinate, direction: direction).allSatisfy { treeHeight in
+                treeHeight < self[coordinate]
             }
-            return self[coordinate] > tallestAdjacentTree
         }
     }
     
+    /// scenicScore is the product of the viewingDistances for each of the four directions
     func scenicScore(for coordinate: Coordinate) -> Int {
         func viewingDistance(direction: Direction) -> Int {
-            let adj = adjacentValues(coordinate, direction: direction)
-            let ret = adj.enumerated()
-                .first {
-                    $0.element >= self[coordinate]
-                }?.offset
-            return ret.map { $0 + 1 } ?? adj.count
+            var distance = 0
+            for height in adjacentTrees(coordinate, direction: direction) {
+                distance += 1
+                if height >= self[coordinate] {
+                    return distance
+                }
+            }
+            return distance
         }
         
         return Direction.allCases
