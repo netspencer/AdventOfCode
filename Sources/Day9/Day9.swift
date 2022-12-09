@@ -22,7 +22,7 @@ struct Day9: Exercise {
     
     func visitsForRope(ofLength length: Int) -> Int {
         instructions
-            .reduce(into: Rope(ropeLength: length)) { $0.execute($1) }
+            .reduce(into: Rope(length: length)) { $0.execute($1) }
             .tailVisits
             .count
     }

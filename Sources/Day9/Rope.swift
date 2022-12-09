@@ -3,12 +3,12 @@ import Foundation
 import Utils
 
 struct Rope {
-    var knots: Array<Position>
-    var tailVisits: Set<Position>
+    var knots: Array<Knot>
+    var tailVisits: Set<Knot>
 
     init(length: Int) {
-        self.knots = Array(repeating: Position.zero, count: length)
-g        self.tailVisits = [knots.tail]
+        self.knots = Array(repeating: Knot.zero, count: length)
+        self.tailVisits = [knots.tail]
     }
     
     mutating func execute(_ instruction: Instruction) {

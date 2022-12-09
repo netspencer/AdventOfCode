@@ -1,9 +1,9 @@
-struct Position: Hashable {
+struct Knot: Hashable {
     var x: Int
     var y: Int
-    static let zero = Position(x: 0, y: 0)
+    static let zero = Knot(x: 0, y: 0)
         
-    func isAdjacent(_ other: Position) -> Bool {
+    func isAdjacent(_ other: Knot) -> Bool {
         guard self != other else { return true }
         return abs(x - other.x) <= 1 && abs(y - other.y) <= 1
     }
@@ -21,7 +21,7 @@ struct Position: Hashable {
         }
     }
     
-    mutating func move(towards other: Position) {
+    mutating func move(towards other: Knot) {
         guard !isAdjacent(other) else { return }
         
         let xMove = x < other.x ? 1 : -1
