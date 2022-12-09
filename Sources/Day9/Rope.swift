@@ -8,7 +8,7 @@ struct Rope {
 
     init(length: Int) {
         self.knots = Array(repeating: Position.zero, count: length)
-        self.tailVisits = [.zero]
+g        self.tailVisits = [knots.tail]
     }
     
     mutating func execute(_ instruction: Instruction) {
