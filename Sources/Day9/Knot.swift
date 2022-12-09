@@ -8,7 +8,7 @@ struct Knot: Hashable {
         return abs(x - other.x) <= 1 && abs(y - other.y) <= 1
     }
     
-    mutating func move(direction: Direction) {
+    mutating func move(direction: Instruction.Direction) {
         switch direction {
         case .up: y += 1
         case .down: y -= 1

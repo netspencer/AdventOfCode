@@ -11,8 +11,8 @@ extension Instruction {
     }
 }
 
-extension Direction {
-    static func parse(_ input: Substring) -> Direction {
+extension Instruction.Direction {
+    static func parse(_ input: Substring) -> Instruction.Direction {
         switch input {
         case "U": return .up
         case "D": return .down
