@@ -20,7 +20,7 @@ struct Day10: Exercise {
     }
     
     var partTwo: String {
-        ["\n"] + cycles
+        cycles
             .chunks(ofCount: 40)
             .prefix(6)
             .map { String($0.map(\.pixel)) }
