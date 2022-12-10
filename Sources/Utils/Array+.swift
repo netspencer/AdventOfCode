@@ -22,7 +22,7 @@ public extension Array {
     }
 }
 
-// MARK: Splat
+// MARK: - Splat
 
 public extension Array {
     func splat() -> (Element,Element) {

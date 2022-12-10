@@ -10,6 +10,7 @@ import Utils
 @testable import Day7
 @testable import Day8
 @testable import Day9
+@testable import Day10
 
 final class AdventOfCodeTests: XCTestCase {
     func testDay1() {
@@ -101,11 +102,34 @@ final class AdventOfCodeTests: XCTestCase {
             )
         }
     }
+    
+    func testDay10() {
+        measure {
+            expectExerciseOutput(
+                exercise: Day10(input: input(forDay: 10)),
+                partOne: "15260",
+                partTwo: """
+                ###...##..#..#.####..##..#....#..#..##..
+                #..#.#..#.#..#.#....#..#.#....#..#.#..#.
+                #..#.#....####.###..#....#....#..#.#....
+                ###..#.##.#..#.#....#.##.#....#..#.#.##.
+                #....#..#.#..#.#....#..#.#....#..#.#..#.
+                #.....###.#..#.#.....###.####..##...###.
+                """
+            )
+        }
+    }
 }
 
 func expectExerciseOutput(exercise: Exercise, partOne: String, partTwo: String) {
-    XCTAssertEqual(exercise.partOne, partOne)
-    XCTAssertEqual(exercise.partTwo, partTwo)
+    XCTAssertEqual(
+        exercise.partOne.trimmingCharacters(in: .newlines),
+        partOne.trimmingCharacters(in: .newlines)
+    )
+    XCTAssertEqual(
+        exercise.partTwo.trimmingCharacters(in: .newlines),
+        partTwo.trimmingCharacters(in: .newlines)
+    )
 }
 
 func input(forDay day: Int) -> Input {
