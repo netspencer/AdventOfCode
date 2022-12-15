@@ -5,7 +5,7 @@ import Utils
 extension Cave {
     static func parse(_ input: Input) -> Cave {
         Cave(
-            items: Set(input.lines
+            rocks: Set(input.lines
                 .flatMap {
                     $0.components(separatedBy: " -> ")
                         .map { coordinates -> Point in

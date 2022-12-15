@@ -3,18 +3,18 @@ import Foundation
 import Utils
 
 @main
-struct Day13: Exercise {
+struct Day14: Exercise {
+    let cave: Cave
+    
     init(input: Input) {
-        var cave = Cave.parse(input)
-        dump(cave)
-
-        var sandCount = 0
-        while let sand = cave.dropSand() {
-            cave.items.insert(sand)
-            sandCount += 1
-            print("sand \(sandCount)", sand)
-        }
-
-        print("sandCount", sandCount)
+        self.cave = Cave.parse(input)
+    }
+    
+    var partOne: String {
+        cave.filledWithSand().sandCount.description
+    }
+    
+    var partTwo: String {
+        cave.filledWithSand(isEndlessVoid: false).sandCount.description
     }
 }

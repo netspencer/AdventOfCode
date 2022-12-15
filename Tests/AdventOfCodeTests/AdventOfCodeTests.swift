@@ -14,6 +14,7 @@ import Utils
 @testable import Day11
 @testable import Day12
 @testable import Day13
+@testable import Day14
 
 final class AdventOfCodeTests: XCTestCase {
     func testDay1() {
@@ -152,6 +153,17 @@ final class AdventOfCodeTests: XCTestCase {
             )
         }
     }
+    
+    func testDay14() {
+        measure {
+            expectExerciseOutput(
+                exercise: Day14(input: input(forDay: 14)),
+                partOne: "6272",
+                partTwo: "22288"
+            )
+        }
+    }
+
 }
 
 func expectExerciseOutput(exercise: Exercise, partOne: String, partTwo: String) {
