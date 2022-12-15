@@ -33,18 +33,16 @@ struct Cave {
         while let nextMove = nextMove(for: point) {
             point = nextMove
         }
-        if point == origin {
-            items.insert(point)
-            return nil
-        }
-        if point.y == depth.upperBound && isEndlessVoid {
-            return nil
-        }
-        if point.y == depth.upperBound {
-            point = Point(x: point.x, y: point.y - 1)
+        
+        if point.y == depth.upperBound { // hit the floor
+            if isEndlessVoid { // sand falls into the void
+                return nil
+            } else { // sand lands right above the floor
+                point = Point(x: point.x, y: point.y - 1)
+            }
         }
         items.insert(point)
-        return point
+        return point == origin ? nil : point
     }
 
     mutating func extendFloor(by y: Int) {
