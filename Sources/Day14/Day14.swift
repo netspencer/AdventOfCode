@@ -11,10 +11,10 @@ struct Day14: Exercise {
     }
     
     var partOne: String {
-        cave.filledWithSand().sandCount.description
+        cave.filledWithSand().sand.count.description
     }
     
     var partTwo: String {
-        cave.filledWithSand(isEndlessVoid: false).sandCount.description
+        cave.filledWithSand(isEndlessVoid: false).sand.count.description
     }
 }

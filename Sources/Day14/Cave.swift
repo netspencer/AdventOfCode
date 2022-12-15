@@ -15,8 +15,8 @@ struct Cave {
         self.depth = (0...items.floor)
     }
     
-    var sandCount: Int {
-        items.count - rocks.count
+    var sand: Set<Point> {
+        items.subtracting(rocks)
     }
     
     mutating func dropSand(
