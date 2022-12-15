@@ -1,5 +1,13 @@
 import Foundation
 
+public extension StringProtocol {
+	var integers: [Int] {
+		return self
+			.split{ "-0123456789".contains($0) == false }
+			.map { Int($0)! }
+	}
+}
+
 public extension String {
     subscript(value: Int) -> Character {
         self[index(at: value)]

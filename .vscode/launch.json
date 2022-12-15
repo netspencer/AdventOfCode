@@ -251,6 +251,24 @@
             "args": [],
             "cwd": "${workspaceFolder:AdventOfCode}",
             "preLaunchTask": "swift: Build Release Day14"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug Day15",
+            "program": "${workspaceFolder:AdventOfCode}/.build/debug/Day15",
+            "args": [],
+            "cwd": "${workspaceFolder:AdventOfCode}",
+            "preLaunchTask": "swift: Build Debug Day15"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Release Day15",
+            "program": "${workspaceFolder:AdventOfCode}/.build/release/Day15",
+            "args": [],
+            "cwd": "${workspaceFolder:AdventOfCode}",
+            "preLaunchTask": "swift: Build Release Day15"
         }
     ]
 }
