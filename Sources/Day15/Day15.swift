@@ -12,7 +12,7 @@ struct Day15: Exercise {
     
     var partOne: String {
         beaconMap
-            .numPointsWhereNoBeaconPossible(forY: 2_000_000)
+            .countLocationsWhereNoBeaconPossible(forY: 2_000_000)
             .description
     }
 

@@ -2,7 +2,7 @@ import Algorithms
 import Foundation
 import Utils
 
-enum PointPair {
+enum TwoPoints {
     static func parse(_ input: String) -> (Point, Point) {
         let ints = input.integers
         return (
@@ -15,9 +15,9 @@ enum PointPair {
 extension BeaconMap {
     static func parse(_ input: Input) -> BeaconMap {
         self.init(
-            points: input.lines
+            pointPairs: input.lines
                 .lazy
-                .map(PointPair.parse)
+                .map(TwoPoints.parse)
                 .map { sensor, beacon in
                     return (sensor, beacon, sensor.manhattanDistance(to: beacon))
                 }
