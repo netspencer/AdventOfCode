@@ -8,18 +8,17 @@ struct Day15: Exercise {
 
     init(input: Input) {
         self.beaconMap = BeaconMap.parse(input)
-        dump(beaconMap)
     }
     
     var partOne: String {
         beaconMap
-            .numLocationsWhereNoBeaconPossible(forY: 2_000_000)
+            .numPointsWhereNoBeaconPossible(forY: 2_000_000)
             .description
     }
 
     var partTwo: String {
         beaconMap
-            .findUndetectedBeacon(searchSpace: 0...4_000_000)!
+            .findUndetectedBeacon(in: 0 ... 4_000_000)
             .tuningFrequency
             .description
     }

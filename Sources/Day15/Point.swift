@@ -16,6 +16,10 @@ struct Point: Hashable, CustomStringConvertible {
 		abs(x - other.x) + abs(y - other.y)
 	}
 
+    var tuningFrequency: Int {
+        x * 4_000_000 + y
+    }
+
     var description: String {
         "x = \(x), y = \(y)"
     }

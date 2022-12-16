@@ -6,44 +6,53 @@ struct BeaconMap {
     typealias ManhattanDistance = Int
 
     // distances from each sensor to nearest beacon
-    let distances: [Point: ManhattanDistance]
+    let points: [(Point, Point, ManhattanDistance)]
 
-    init(distances: [Point: ManhattanDistance]) {
-        self.distances = distances
+    init(points: [(Point, Point, ManhattanDistance)]) {
+        self.points = points
     }
-
-    func fusedXRanges(forY y: Point.Y, clamped limit: ClosedRange<Point.Y>? = nil) -> Set<ClosedRange<Point.X>> {
-        var ranges = distances
-            .compactMap { sensor, max -> ClosedRange<Int>? in
-                let xRange = max - abs(sensor.y - y)
-                guard xRange > 0 else { return nil }
-                return sensor.x - xRange ... sensor.x + xRange
-            }
-        if let limit {
-            ranges = ranges.compactMap { $0.clamped(to: limit) }
+    
+    func numPointsWhereNoBeaconPossible(forY y: Point.Y) -> Int {
+        var seen = Set<Int>()
+        
+        for (s, _, d) in points {
+            let distanceToY = abs(y - s.y)
+            guard distanceToY < d else { continue }
+            
+            let wiggle = d - distanceToY
+            let l = s.x - wiggle
+            let r = s.x + wiggle
+            seen.formUnion(l ... r)
         }
-        return Set(ranges).fused()
+        
+        for (s, b, _) in points {
+            if s.y == y { seen.remove(s.x) }
+            if b.y == y { seen.remove(b.x) }
+        }
+        
+        return seen.count
     }
-
-    func numLocationsWhereNoBeaconPossible(forY y: Point.Y) -> Int {
-        fusedXRanges(forY: y)
-            .map(\.count)
-            .sum - 1
-    }
-
-    func findUndetectedBeacon(searchSpace: ClosedRange<Point.Y>) -> Point? {
+    
+    func findUndetectedBeacon(in searchSpace: ClosedRange<Point.Y>) -> Point {
         for y in searchSpace {
-            let fusedRanges = fusedXRanges(forY: y, clamped: searchSpace)
-            guard fusedRanges != [searchSpace] else { continue }
-            let x = fusedRanges.map(\.upperBound).min()! + 1
-            return Point(x: x, y: y)
+            var unseen = IndexSet(integersIn: searchSpace)
+            for (s, _, d) in points {
+                let distanceToY = abs(y - s.y)
+                guard distanceToY < d else { continue }
+                
+                let wiggle = d - distanceToY
+                let l = (s.x - wiggle < 0) ? 0 : s.x - wiggle
+                let r = (s.x + wiggle > searchSpace.upperBound) ? searchSpace.upperBound : s.x + wiggle
+                unseen.remove(integersIn: l ... r)
+            }
+            
+            if unseen.count > 0 {
+                let x = unseen.first!
+                return Point(x: x, y: y)
+            }
         }
-        return nil
+        
+        fatalError()
     }
 }
 
-extension Point {
-    var tuningFrequency: Int {
-        x * 4_000_000 + y
-    }
-}
