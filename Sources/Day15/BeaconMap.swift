@@ -13,8 +13,11 @@ struct BeaconMap {
         self.pointPairs = pointPairs
     }
     
-    func locationsWithoutBeacons(forY y: Point.Y) -> Set<Point.X> {
-        var locations = Set<Point.X>()
+    func locationsWithoutBeacons(
+        forY y: Point.Y,
+        clamed range: ClosedRange<Point.X>? = nil
+    ) -> Set<ClosedRange<Point.X>> {
+        var locations = Set<ClosedRange<Point.X>>()
         
         for (sensor, _, distanceToNearestBeacon) in pointPairs {
             let nearestPointInRow = Point(x: sensor.x, y: y) // a straight line is always the shortest
@@ -24,15 +27,27 @@ struct BeaconMap {
             
             let gap = distanceToNearestBeacon - distanceToNearestPointOnLine
             
+            var left = sensor.x - gap
+            var right = sensor.x + gap
+            
+            if let range {
+                left = max(range.lowerBound, sensor.x - gap)
+                right = min(range.upperBound, sensor.x + gap)
+            }
+            
             // all the points on the line that are closer to the sensor must not contain a beacon
-            locations.formUnion((sensor.x - gap) ... (sensor.x + gap))
+            locations.insert(left ... right)
         }
         
         return locations
     }
     
     func countLocationsWhereNoBeaconPossible(forY y: Point.Y) -> Int {
-        var locations = locationsWithoutBeacons(forY: y)
+        var locations = Set<Point.X>()
+        
+        for range in locationsWithoutBeacons(forY: y) {
+            locations.formUnion(range)
+        }
         
         // remove all the points that actually do have a sensor or beacon
         for (sensor, beacon, _) in pointPairs {
@@ -45,24 +60,14 @@ struct BeaconMap {
     
     func findUndetectedBeacon(in searchSpace: ClosedRange<Point.Y>) -> Point {
         for y in searchSpace {
-            var unseen = IndexSet(integersIn: searchSpace)
+            var beacons = IndexSet(integersIn: searchSpace)
             
-            for (sensor, _, distanceToNearestBeacon) in pointPairs {
-                let nearestPointInRow = Point(x: sensor.x, y: y) // a straight line is always the shortest
-                let distanceToNearestPointOnLine = sensor.manhattanDistance(to: nearestPointInRow)
-                
-                guard distanceToNearestPointOnLine < distanceToNearestBeacon else { continue }
-                
-                let gap = distanceToNearestBeacon - distanceToNearestPointOnLine
-                
-                let left = max(0, sensor.x - gap)
-                let right = min(searchSpace.upperBound, sensor.x + gap)
-                
-                unseen.remove(integersIn: left ... right)
+            for range in locationsWithoutBeacons(forY: y, clamed: searchSpace) {
+                beacons.remove(integersIn: range)
             }
             
-            if unseen.count > 0 {
-                let x = unseen.first!
+            if beacons.count > 0 {
+                let x = beacons.first!
                 return Point(x: x, y: y)
             }
         }
