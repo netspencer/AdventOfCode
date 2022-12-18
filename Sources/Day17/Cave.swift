@@ -20,15 +20,85 @@ struct Cave {
         grid.count
     }
     
-    mutating func dropRocks(count: Int) {
-        var counter = 0
+    mutating func dropRocks(count: Int) -> Int {
+        if count > 10_000 {
+            return __dropRocks_optimized(count: count)
+        } else {
+            return __dropRocks_lazy(count: count)
+        }
+    }
+    
+    private mutating func __dropRocks_lazy(count: Int) -> Int {
         for rock in rocks.cycled() {
             drop(rock: rock)
-            counter += 1
-            if counter == count {
+            rockCount += 1
+            if rockCount == count {
                 break
             }
         }
+        return grid.count
+    }
+    
+    private mutating func __dropRocks_optimized(count: Int) -> Int {
+        struct Info: Hashable {
+            let rockCount: Int
+            let height: Int
+            let caps: [Int]
+        }
+        
+        var rockQueue = Deque(rocks)
+        var visited = [Int: [Int: [Info]]]()
+        
+        while let rock = rockQueue.popFirst() {
+            rockQueue.append(rock)
+            rockCount += 1
+            
+            drop(rock: rock)
+            
+            let rockIndex = (rockCount - 1).quotientAndRemainder(dividingBy: rockQueue.count).remainder
+            let (gasLoop, gasIndex) = gasCount.quotientAndRemainder(dividingBy: gasQueue.count)
+
+            guard gasLoop > 0 else { continue }
+            
+            let gridCaps = (0...6).map { index in
+                grid.firstIndex(where: { $0.contains(index) }) ?? 0
+            }
+            
+            guard let match = visited[gasIndex]?[rockIndex]?.first(where: { $0.caps == gridCaps }) else {
+                visited[gasIndex, default: [:]][rockIndex, default: []]
+                    .append(Info(
+                        rockCount: rockCount,
+                        height: grid.count,
+                        caps: gridCaps
+                    ))
+                continue
+            }
+            
+            let cycleSize = rockCount - match.rockCount
+            let (numberOfCycles, numberOfExtras) = (count - match.rockCount)
+                .quotientAndRemainder(dividingBy: cycleSize)
+            
+            let cycleHeight = grid.count - match.height
+            let totalCycleHeight = numberOfCycles * cycleHeight
+            
+            let total = match.height + totalCycleHeight
+            
+            let extrasTotal: Int = {
+                guard numberOfExtras > 1 else { return 0 }
+                
+                let initialGridHeight = grid.count
+                for _  in 1 ... numberOfExtras {
+                    guard let rock = rockQueue.popFirst() else { continue }
+                    rockQueue.append(rock)
+                    drop(rock: rock)
+                }
+                return grid.count - initialGridHeight
+            }()
+            
+            return total + extrasTotal
+        }
+        
+        fatalError()
     }
     
     mutating func drop(rock: Rock) {

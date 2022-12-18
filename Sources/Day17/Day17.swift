@@ -12,22 +12,18 @@ struct Day17: Exercise {
         self.rocks = InputData.rocks
             .components(separatedBy: "\n\n")
             .map(Rock.parse)
-        
-        dump(rocks)
-        
+                
         self.gas = input.rawValue.compactMap(Direction.parse)
     }
     
     var partOne: String {
         var cave = Cave(rocks: rocks, gas: gas)
-        cave.dropRocks(count: 2022)
-        return cave.height.description
+        return cave.dropRocks(count: 2022).description
     }
     
     var partTwo: String {
         var cave = Cave(rocks: rocks, gas: gas)
-        cave.dropRocks(count: 1_000_000_000_000)
-        return cave.height.description
+        return cave.dropRocks(count: 1_000_000_000_000).description
     }
 }
 
