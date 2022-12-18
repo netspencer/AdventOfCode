@@ -21,6 +21,6 @@ struct Point: Hashable, CustomStringConvertible {
     }
 
     var description: String {
-        "x = \(x), y = \(y)"
+        "(x: \(x), y: \(y))"
     }
 }

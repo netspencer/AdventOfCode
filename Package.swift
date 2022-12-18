@@ -4,7 +4,7 @@
 import PackageDescription
 import Foundation
 
-let days = 1...16
+let days = 1...17
 
 let package = Package(
     name: "AdventOfCode",
