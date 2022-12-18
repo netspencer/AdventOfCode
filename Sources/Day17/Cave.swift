@@ -4,60 +4,36 @@ import Collections
 import Utils
 
 struct Cave {
-    let rocks: [Rock]
+    struct Info: Hashable {
+        let rockCount: Int
+        let height: Int
+        let caps: [Int]
+    }
+    
+    var rockQueue: Deque<Rock>
     var gasQueue: Deque<Direction>
+    
     var grid: [Set<Int>] = []
     
+    var visited = [Int: [Int: [Info]]]()
     var rockCount = 0
     var gasCount = 0
     
     init(rocks: [Rock], gas: [Direction]) {
-        self.rocks = rocks
+        self.rockQueue = Deque(rocks)
         self.gasQueue = Deque(gas)
     }
-    
-    var height: Int {
-        grid.count
-    }
-    
+        
     mutating func dropRocks(count: Int) -> Int {
-        if count > 10_000 {
-            return __dropRocks_optimized(count: count)
-        } else {
-            return __dropRocks_lazy(count: count)
-        }
-    }
-    
-    private mutating func __dropRocks_lazy(count: Int) -> Int {
-        for rock in rocks.cycled() {
-            drop(rock: rock)
-            rockCount += 1
-            if rockCount == count {
-                break
-            }
-        }
-        return grid.count
-    }
-    
-    private mutating func __dropRocks_optimized(count: Int) -> Int {
-        struct Info: Hashable {
-            let rockCount: Int
-            let height: Int
-            let caps: [Int]
-        }
-        
-        var rockQueue = Deque(rocks)
-        var visited = [Int: [Int: [Info]]]()
-        
         while let rock = rockQueue.popFirst() {
+            drop(rock: rock)
+            
+            let rockIndex = (rockCount).quotientAndRemainder(dividingBy: rockQueue.count).remainder
+            let (gasLoop, gasIndex) = gasCount.quotientAndRemainder(dividingBy: gasQueue.count)
+            
             rockQueue.append(rock)
             rockCount += 1
             
-            drop(rock: rock)
-            
-            let rockIndex = (rockCount - 1).quotientAndRemainder(dividingBy: rockQueue.count).remainder
-            let (gasLoop, gasIndex) = gasCount.quotientAndRemainder(dividingBy: gasQueue.count)
-
             guard gasLoop > 0 else { continue }
             
             let gridCaps = (0...6).map { index in
@@ -100,7 +76,7 @@ struct Cave {
         
         fatalError()
     }
-    
+
     mutating func drop(rock: Rock) {
         var rock = rock
             .moving(.right, count: 2)
