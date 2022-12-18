@@ -23,6 +23,12 @@ struct Day17: Exercise {
         cave.dropRocks(count: 2022)
         return cave.height.description
     }
+    
+    var partTwo: String {
+        var cave = Cave(rocks: rocks, gas: gas)
+        cave.dropRocks(count: 1_000_000_000_000)
+        return cave.height.description
+    }
 }
 
 enum InputData {
