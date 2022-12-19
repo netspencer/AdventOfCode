@@ -47,7 +47,8 @@ func dayTargets(days: ClosedRange<Int>) -> [PackageDescription.Target] {
                 .product(name: "Collections", package: "swift-collections"),
                 .product(name: "Parsing", package: "swift-collections"),
                 .product(name: "SwiftGraph", package: "swift-collections"),
-            ]
+            ],
+            swiftSettings: [.unsafeFlags(["-O"])]
         )
     }
 }

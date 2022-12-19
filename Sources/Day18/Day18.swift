@@ -14,4 +14,8 @@ struct Day18: Exercise {
     var partOne: String {
         volcano.surfaceArea.description
     }
+    
+    var partTwo: String {
+        volcano.externalSurfaceArea.description
+    }
 }
