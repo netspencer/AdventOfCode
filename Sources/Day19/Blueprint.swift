@@ -39,8 +39,8 @@ struct Blueprint {
             let remainingTime = minutes - state.timestamp
             
             let maxPotential = state.geodeCount
-                + state.oreRobotCount * remainingTime
-                + ((remainingTime * remainingTime) / 2)
+                + state.geodeRobotCount * remainingTime
+                + ((remainingTime * (remainingTime - 1)) / 2)
 
             guard maxPotential >= maxGeodes else { continue }
             

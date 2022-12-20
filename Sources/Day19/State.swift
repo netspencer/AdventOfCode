@@ -36,7 +36,7 @@ struct State: Hashable {
         rocks[.geode, default: 0]
     }
     
-    var oreRobotCount: Int {
-        robots[.ore, default: 0]
+    var geodeRobotCount: Int {
+        robots[.geode, default: 0]
     }
 }
