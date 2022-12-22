@@ -13,8 +13,8 @@ extension Monkey {
 
 extension Monkey.Value {
     static func parse(_ input: some StringProtocol) -> Monkey.Value {
-        if let int = Int(input) {
-            return .int(int)
+        if let double = Double(input) {
+            return .number(double)
         } else {
             let (left, op, right) = input.components(separatedBy: " ").splat()
             return .operation(left, .parse(op), right)

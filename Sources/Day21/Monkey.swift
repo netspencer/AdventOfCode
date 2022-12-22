@@ -9,7 +9,7 @@ struct Monkey {
             case add, subtract, multiply, divide
         }
         
-        case int(Int)
+        case number(Double)
         case operation(Name, Operation, Name)
     }
     
@@ -21,10 +21,10 @@ struct Monkey {
         self.value = value
     }
     
-    var int: Int? {
+    var number: Double? {
         switch value {
-        case let .int(int):
-            return int
+        case let .number(double):
+            return double
         default:
             return nil
         }
@@ -38,42 +38,65 @@ struct Monkey {
             return nil
         }
     }
-    
-    var isSolved: Bool {
-        int != nil
-    }
-    
-    var isNotSolved: Bool {
-        !isSolved
-    }
 }
 
 extension Array where Element == Monkey {
-    func solved() -> [Monkey.Name: Int] {
-        var solved = reduce(into: [Monkey.Name: Int]()) { solved, monkey in
-            if let int = monkey.int {
-                solved[monkey.name] = int
+    var solved: [Monkey.Name: Double] {
+        reduce(into: [Monkey.Name: Double]()) { solved, monkey in
+            if let number = monkey.number {
+                solved[monkey.name] = number
             }
         }
+    }
         
-        var monkeysToSolve = self.filter(\.isNotSolved)
-        
+    func rootValue(solved: [Monkey.Name: Double], shouldReturnDifference: Bool) -> Double {
+        var solved = solved
         while solved.count < count {
-            for monkey in monkeysToSolve {
+            for monkey in self {
+                guard solved[monkey.name] == nil else { continue }
                 guard let operation = monkey.operation else { continue }
                 guard let leftMonkeyInt = solved[operation.0] else { continue }
                 guard let rightMonkeyInt = solved[operation.2] else { continue }
-
+                
+                if shouldReturnDifference, monkey.name == "root" {
+                    return leftMonkeyInt - rightMonkeyInt
+                }
+                
                 solved[monkey.name] = operation.1.solved(leftMonkeyInt, rightMonkeyInt)
             }
         }
+        return solved["root"]!
+    }
+    
+    var rootValue: Int {
+        Int(rootValue(solved: solved, shouldReturnDifference: false))
+    }
+
+    var humnValue: Int {
+        var bounds = 0 ... Int.max-1
+        var solved = solved
         
-        return solved
+        while bounds.lowerBound != bounds.upperBound {
+            let candidate = bounds.lowerBound + (bounds.count / 2)
+            solved["humn"] = Double(candidate)
+            
+            let difference = rootValue(solved: solved, shouldReturnDifference: true)
+                                  
+            if difference > 0 {
+                bounds = candidate ... bounds.upperBound
+            } else if difference < 0 {
+                bounds = bounds.lowerBound ... candidate
+            } else {
+                bounds = candidate ... candidate
+            }
+        }
+        
+        return bounds.lowerBound
     }
 }
 
 extension Monkey.Value.Operation {
-    func solved(_ lhs: Int, _ rhs: Int) -> Int {
+    func solved(_ lhs: Double, _ rhs: Double) -> Double {
         switch self {
         case .add: return lhs + rhs
         case .subtract: return lhs - rhs

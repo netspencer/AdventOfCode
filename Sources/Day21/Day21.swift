@@ -10,6 +10,10 @@ struct Day21: Exercise {
     }
     
     var partOne: String {
-        monkeys.solved()["root"]?.description ?? ""
+        monkeys.rootValue.description
+    }
+    
+    var partTwo: String {
+        monkeys.humnValue.description
     }
 }
