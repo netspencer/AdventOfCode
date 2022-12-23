@@ -38,6 +38,109 @@ struct Point: Hashable, CustomStringConvertible {
         return newPoint
     }
     
+    func transitioningCube(in grid: [Point: Tile], moving direction: Direction) -> (Point, Direction) {
+        let edgeSize = (grid.xRange(forY: 0).upperBound + 1) / 3
+        
+        var newPosition = self
+        newPosition.x = newPosition.x + 1
+        newPosition.y = newPosition.y + 1
+        
+        var newDirection: Direction
+        
+        if newPosition.x > edgeSize*2 {
+            switch direction {
+            case .right:
+                newPosition.x = edgeSize*2
+                newPosition.y = (edgeSize*3)+1 - newPosition.y
+                newDirection = .left
+            case .down:
+                newPosition.y = newPosition.x - edgeSize
+                newPosition.x = edgeSize*2
+                newDirection = .left
+            case .up:
+                newPosition.x = newPosition.x - edgeSize*2
+                newPosition.y = edgeSize*4
+                newDirection = .up
+            case .left:
+                fatalError()
+            }
+        } else if newPosition.y <= edgeSize {
+            switch direction {
+            case .up:
+                newPosition.y = newPosition.x + edgeSize*2
+                newPosition.x = 1
+                newDirection = .right
+            case .left:
+                newPosition.y = (edgeSize*3)+1 - newPosition.y
+                newPosition.x = 1
+                newDirection = .right
+            case .down, .right:
+                fatalError()
+            }
+        } else if newPosition.y <= edgeSize*2 {
+            switch direction {
+            case .left:
+                newPosition.x = newPosition.y - edgeSize
+                newPosition.y = (edgeSize*2)+1
+                newDirection = .down
+            case .right:
+                newPosition.x = newPosition.y + edgeSize
+                newPosition.y = edgeSize
+                newDirection = .up
+            case .up, .down:
+                fatalError()
+            }
+        } else if newPosition.x > edgeSize {
+            switch direction {
+            case .right:
+                newPosition.x = edgeSize*3
+                newPosition.y = (edgeSize*3)+1 - newPosition.y
+                newDirection = .left
+            case .down:
+                newPosition.y = newPosition.x + edgeSize*2
+                newPosition.x = edgeSize
+                newDirection = .left
+            case .up, .left:
+                fatalError()
+            }
+        } else if newPosition.y <= edgeSize*3 {
+            switch direction {
+            case .up:
+                newPosition.y = newPosition.x + edgeSize
+                newPosition.x = edgeSize+1
+                newDirection = .right
+            case .left:
+                newPosition.x = edgeSize+1
+                newPosition.y = (edgeSize*3)+1 - newPosition.y
+                newDirection = .right
+            case .right, .down:
+                fatalError()
+            }
+        } else {
+            switch direction {
+            case .left:
+                newPosition.x = newPosition.y - edgeSize*2
+                newPosition.y = 1
+                newDirection = .down
+            case .right:
+                newPosition.x = newPosition.y - edgeSize*2
+                newPosition.y = edgeSize*3
+                newDirection = .up
+            case .down:
+                newPosition.x += edgeSize*2
+                newPosition.y = 1
+                newDirection = .down
+            case .up:
+                fatalError()
+            }
+        }
+        
+        newPosition.x = newPosition.x - 1
+        newPosition.y = newPosition.y - 1
+
+        return (newPosition, newDirection)
+    }
+    
     var description: String {
         "(x: \(x), y: \(y))"
     }

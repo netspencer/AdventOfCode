@@ -12,4 +12,8 @@ struct Day22: Exercise {
     var partOne: String {
         jungle.finalPassword.description
     }
+    
+    var partTwo: String {
+        jungle.finalPasswordCube.description
+    }
 }
